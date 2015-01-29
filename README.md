@@ -25,7 +25,7 @@ Android PullToRefresh的简易实现原理，主要是分析，便于定制修�
 	1、PullToRefreshBase扩展于LinearLayout，垂直排列
 　　2、从上到下的顺序是：Header, Content, Footer
 　　3、Content填充满父控件，通过设置top, bottom的padding来使Header和Footer不可见，也就是让它超出屏幕外（通过在PullToRefreshBase中直接调用setPadding(0,-y,0,y)即可，y分别为header view和footer view的高度height）
-　　4、下拉时，调用scrollTo方法来将整个布局向下滑动，从而把Header显示出来，上拉正好与下拉相反（主要通过onInceptTouchEvent()和onTouchEvent()捕获move等事件实现，当event为down、move的时候scrollTo，当up的时候scroll回来）。
+　　4、下拉时，调用scrollTo方法来将整个布局向下滑动，从而把Header显示出来，上拉正好与下拉相反（主要通过onInceptTouchEvent()和onTouchEvent()捕获move等事件实现，当event为down、move的时候scrollTo，当up的时候onRefresh()，refreshComplete()后scroll回来）。
 　　5、派生类需要实现的是：将Content View填充到父容器中，比如，如果你要使用的话，那么你需要把ListView, ScrollView, WebView等添加到容器中。
 　　
 　　注1：其中第三点主要是在view的onSizeChanged()中实现的。执行顺序:
